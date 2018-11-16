@@ -2,7 +2,7 @@
 /node_modules/
 /lib/*
 !/lib/js/*
-/bundledOutputs/
+/build/
 npm-debug.log
 .DS_Store
 .bsb.lock
