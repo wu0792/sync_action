@@ -1,7 +1,12 @@
 {
   "name": "reason-react-example",
-  "bsc-flags": ["-bs-no-version-header", "-bs-super-errors"],
-  "reason": {"react-jsx" : 2},
+  "bsc-flags": [
+    "-bs-no-version-header",
+    "-bs-super-errors"
+  ],
+  "reason": {
+    "react-jsx": 2
+  },
   "namespace": true,
   "bs-dependencies": [
     "reason-react",
@@ -15,9 +20,9 @@
     }
   ],
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6",
     "in-source": true
   },
-  "suffix": ".bs.js",
+  "suffix": ".js",
   "refmt": 3
 }

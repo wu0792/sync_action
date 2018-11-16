@@ -12,6 +12,11 @@
             "type": "npm",
             "script": "webpack",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": []
         }
     ]
 }

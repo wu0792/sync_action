@@ -1,14 +1,7 @@
 {
-  "name": "ATS",
+  "name": "SyncAction",
   "version": "1.0",
-  "description": "Auto Test Sprite 自动化测试录制工具",
-  "devtools_page": "./devtools.html",
-  "externally_connectable": {
-    "matches": [
-      "*://*.ctrip.com/*",
-      "*://*.ctripcorp.com/*"
-    ]
-  },
+  "description": "多窗口复制操作",
   "permissions": [
     "tabs",
     "activeTab",
@@ -18,9 +11,6 @@
     "webNavigation",
     "http://*/*",
     "https://*/*"
-  ],
-  "web_accessible_resources": [
-    "*://cdn.rawgit.com/wu0792/ats_client/b690236e/ext/network.js"
   ],
   "content_scripts": [
     {
@@ -35,6 +25,9 @@
       "run_at": "document_end"
     }
   ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
   "background": {
     "scripts": [
       "./background.js"
