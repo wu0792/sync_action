@@ -6,6 +6,7 @@ const isProd = process.env.NODE_ENV === 'production' || true;
 module.exports = {
   entry: {
     background: './src/js/background.js',
+    popup: './src/js/popup.js',
     content: './src/js/content.js'
   },
   mode: isProd ? 'production' : 'development',
