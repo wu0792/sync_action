@@ -2,7 +2,6 @@
 /node_modules/
 /lib/*
 !/lib/js/*
-/build/
 npm-debug.log
 .DS_Store
 .bsb.lock

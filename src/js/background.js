@@ -1,7 +1,7 @@
 import { ACTIONS } from './actions'
 import { CONNECTIONS } from './connections'
 
-let config = new Map()
+let config = new Map()      // { 1234: {active: false, main:false}}
 
 chrome.runtime.onConnect.addListener(function (port) {
     const { name } = port

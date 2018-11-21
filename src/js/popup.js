@@ -5,7 +5,6 @@ import { CONNECTIONS } from './connections';
 const connContentAndBackground = chrome.runtime.connect({ name: CONNECTIONS.CONTENT_AND_BACKGROUND })
 
 function sendMessage(data) {
-
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0]
     connContentAndBackground.postMessage({ tabId: activeTab.id, ...data })
@@ -18,10 +17,12 @@ const Popup = () => {
 
   useEffect(() => {
     sendMessage({ action: ACTIONS.CHANGE_ACTIVE, value: active })
+    !active && asMainWindow && setAsMainWindow(false)
   }, [active])
 
   useEffect(() => {
     sendMessage({ action: ACTIONS.CHANGE_AS_MAIN_WINDOW, value: asMainWindow })
+    asMainWindow && !active && setActive(true)
   }, [asMainWindow])
 
   return (
