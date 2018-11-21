@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { ACTIONS } from './actions'
+import { CONNECTIONS } from './connections';
+
+const connContentAndBackground = chrome.runtime.connect({ name: CONNECTIONS.CONTENT_AND_BACKGROUND })
 
 function sendMessage(data) {
-  debugger
+
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    var activeTab = tabs[0]
-    chrome.tabs.sendMessage(activeTab.id, data)
+    const activeTab = tabs[0]
+    connContentAndBackground.postMessage({ tabId: activeTab.id, ...data })
   })
 }
 
@@ -13,11 +17,11 @@ const Popup = () => {
   let [asMainWindow, setAsMainWindow] = useState(false)
 
   useEffect(() => {
-    sendMessage({ action: 'changeActive', value: active })
+    sendMessage({ action: ACTIONS.CHANGE_ACTIVE, value: active })
   }, [active])
 
   useEffect(() => {
-    sendMessage({ action: 'changeAsMainWindow', value: asMainWindow })
+    sendMessage({ action: ACTIONS.CHANGE_AS_MAIN_WINDOW, value: asMainWindow })
   }, [asMainWindow])
 
   return (
