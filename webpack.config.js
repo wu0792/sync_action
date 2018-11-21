@@ -14,6 +14,21 @@ module.exports = {
     path: path.join(__dirname, "build"),
     filename: '[name].js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  },
+  devServer: {
+    contentBase: './build'
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
   plugins: [
     new CopyWebpackPlugin([
       { from: './src/manifest.json', to: './', force: true },

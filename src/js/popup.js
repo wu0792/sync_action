@@ -1,5 +1,3 @@
-/*global chrome:true*/
-
 import React, { useState, useEffect } from 'react'
 
 function sendMessage(data) {
