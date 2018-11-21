@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "webpack": "rimraf ./build && webpack -w --mode development",
+    "webpack": "rimraf ./build && webpack -w",
     "webpack:production": "NODE_ENV=production webpack"
   },
   "keywords": [],
