@@ -1,1 +1,181 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=6)}([function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.ACTIONS={CHANGE_ACTIVE:"CHANGE_ACTIVE",CHANGE_AS_MAIN_WINDOW:"CHANGE_AS_MAIN_WINDOW"}},,,,,function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.CONNECTIONS={CONTENT_AND_BACKGROUND:"CONTENT_AND_BACKGROUND"}},function(e,t,n){"use strict";var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},o=n(0),u=n(5),c=new Map;chrome.runtime.onConnect.addListener(function(e){switch(e.name){case u.CONNECTIONS.CONTENT_AND_BACKGROUND:e.onMessage.addListener(function(e){console.log(e),console.log("before update."),console.log(c);var t=e.action,n=e.tabId,u=e.value;switch(c.has(n)||c.set(n,{active:!1,main:!1}),t){case o.ACTIONS.CHANGE_ACTIVE:c.set(n,r({},c.get(n),{active:u}));break;case o.ACTIONS.CHANGE_AS_MAIN_WINDOW:c.set(n,r({},c.get(n),{main:u}))}console.log("after update."),console.log(c)})}})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var ACTIONS = {
+    CHANGE_ACTIVE: 'CHANGE_ACTIVE',
+    CHANGE_AS_MAIN_WINDOW: 'CHANGE_AS_MAIN_WINDOW'
+};
+
+exports.ACTIONS = ACTIONS;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var CONNECTIONS = {
+    CONTENT_AND_BACKGROUND: 'CONTENT_AND_BACKGROUND'
+};
+
+exports.CONNECTIONS = CONNECTIONS;
+
+/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _actions = __webpack_require__(0);
+
+var _connections = __webpack_require__(1);
+
+var config = new Map(); // { 1234: {active: false, main:false}}
+
+chrome.runtime.onConnect.addListener(function (port) {
+    var name = port.name;
+
+    switch (name) {
+        case _connections.CONNECTIONS.CONTENT_AND_BACKGROUND:
+            port.onMessage.addListener(function (msg) {
+                console.log(msg);
+
+                console.log('before update.');
+                console.log(config);
+
+                var action = msg.action,
+                    tabId = msg.tabId,
+                    value = msg.value;
+
+
+                if (!config.has(tabId)) {
+                    config.set(tabId, { active: false, main: false });
+                }
+
+                switch (action) {
+                    case _actions.ACTIONS.CHANGE_ACTIVE:
+                        config.set(tabId, _extends({}, config.get(tabId), { active: value }));
+                        break;
+                    case _actions.ACTIONS.CHANGE_AS_MAIN_WINDOW:
+                        config.set(tabId, _extends({}, config.get(tabId), { main: value }));
+                        break;
+                    default:
+                        break;
+                }
+
+                console.log('after update.');
+                console.log(config);
+            });
+            break;
+
+        default:
+            break;
+    }
+});
+
+/***/ })
+/******/ ]);

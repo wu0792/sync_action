@@ -10,7 +10,6 @@ module.exports = {
     content: './src/js/content.js',
     index: './src/index.js'
   },
-  mode: isProd ? 'production' : 'development',
   output: {
     path: path.join(__dirname, "build"),
     filename: '[name].js',
@@ -24,11 +23,17 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    contentBase: './build'
-  },
   resolve: {
     extensions: ['*', '.js', '.jsx']
+  },
+  optimization: {
+    minimizer: [
+      // new UglifyJsPlugin({
+      //     sourceMap: true,
+      //     test: /\.js($|\?)/i,
+      //     parallel: true
+      // })
+    ]
   },
   plugins: [
     new CopyWebpackPlugin([
@@ -36,5 +41,6 @@ module.exports = {
       { from: './src/*.html', to: './', force: true, flatten: true },
       { from: './src/images/*', to: './', force: true, flatten: true }
     ], {})
-  ]
+  ],
+  watch: true
 };
