@@ -4,23 +4,30 @@ import { CONNECTIONS } from './connections';
 
 const connContentAndBackground = chrome.runtime.connect({ name: CONNECTIONS.CONTENT_AND_BACKGROUND })
 
-function sendMessage(data) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0]
-    connContentAndBackground.postMessage({ tabId: activeTab.id, ...data })
+function getTabId() {
+  return new Promise(resolve => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      resolve(tabs[0].id)
+    })
   })
 }
 
-const Popup = () => {
-  let [active, setActive] = useState(false)
+function sendMessage(data) {
+  getTabId().then(tabId => connContentAndBackground.postMessage({ tabId: tabId, ...data }))
+}
 
-  useEffect(() => sendMessage({ action: ACTIONS.CHANGE_STATUS, active }))
+const Popup = () => {
+  let [active, setActive] = useState(undefined)
+
+  useEffect(() => {
+    sendMessage({ action: ACTIONS.CHANGE_STATUS, active })
+  })
 
   return (
     <React.Fragment>
       <div>
         <label htmlFor='active'>是否激活：</label>
-        <input type='checkbox' id='active' name='active' checked={active} onChange={ev => setActive(ev.target.checked)} />
+        <input type='checkbox' id='active' name='active' checked={active} onClick={_ => setActive(!active)} />
       </div>
 
       <button id='btnStart' onClick={() => sendMessage({ action: ACTIONS.START_SYNC })}>开始</button>

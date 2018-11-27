@@ -255,21 +255,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var connContentAndBackground = chrome.runtime.connect({ name: _connections.CONNECTIONS.CONTENT_AND_BACKGROUND });
 
+function getTabId() {
+  return new Promise(function (resolve) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      resolve(tabs[0].id);
+    });
+  });
+}
+
 function sendMessage(data) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    var activeTab = tabs[0];
-    connContentAndBackground.postMessage(_extends({ tabId: activeTab.id }, data));
+  getTabId().then(function (tabId) {
+    return connContentAndBackground.postMessage(_extends({ tabId: tabId }, data));
   });
 }
 
 var Popup = function Popup() {
-  var _useState = (0, _react.useState)(false),
+  var _useState = (0, _react.useState)(undefined),
       _useState2 = _slicedToArray(_useState, 2),
       active = _useState2[0],
       setActive = _useState2[1];
 
   (0, _react.useEffect)(function () {
-    return sendMessage({ action: _actions.ACTIONS.CHANGE_STATUS, active: active });
+    sendMessage({ action: _actions.ACTIONS.CHANGE_STATUS, active: active });
   });
 
   return _react2.default.createElement(
@@ -283,8 +290,8 @@ var Popup = function Popup() {
         { htmlFor: 'active' },
         '\u662F\u5426\u6FC0\u6D3B\uFF1A'
       ),
-      _react2.default.createElement('input', { type: 'checkbox', id: 'active', name: 'active', checked: active, onChange: function onChange(ev) {
-          return setActive(ev.target.checked);
+      _react2.default.createElement('input', { type: 'checkbox', id: 'active', name: 'active', checked: active, onClick: function onClick(_) {
+          return setActive(!active);
         } })
     ),
     _react2.default.createElement(

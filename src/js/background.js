@@ -14,7 +14,7 @@ chrome.runtime.onConnect.addListener(function (port) {
                     case ACTIONS.CHANGE_STATUS:
                         const theIndex = tabIds.indexOf(tabId)
 
-                        while (active && tabIds.length > 2) {
+                        while (active && tabIds.length >= 2) {
                             tabIds.splice(0, 1) //确保最多只会保留2个tab
                         }
 
