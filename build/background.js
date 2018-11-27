@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -95,8 +95,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var ACTIONS = {
-    CHANGE_ACTIVE: 'CHANGE_ACTIVE',
-    CHANGE_AS_MAIN_WINDOW: 'CHANGE_AS_MAIN_WINDOW'
+    CHANGE_STATUS: 'CHANGE_STATUS',
+    START_SYNC: 'START_SYNC',
+    END_SYNC: 'END_SYNC'
 };
 
 exports.ACTIONS = ACTIONS;
@@ -122,19 +123,18 @@ exports.CONNECTIONS = CONNECTIONS;
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _actions = __webpack_require__(0);
 
 var _connections = __webpack_require__(1);
 
-var config = new Map(); // { 1234: {active: false, main:false}}
+var tabIds = []; // 最多允许两条记录 []
 
 chrome.runtime.onConnect.addListener(function (port) {
     var name = port.name;
@@ -142,33 +142,35 @@ chrome.runtime.onConnect.addListener(function (port) {
     switch (name) {
         case _connections.CONNECTIONS.CONTENT_AND_BACKGROUND:
             port.onMessage.addListener(function (msg) {
-                console.log(msg);
-
-                console.log('before update.');
-                console.log(config);
-
                 var action = msg.action,
                     tabId = msg.tabId,
-                    value = msg.value;
+                    active = msg.active;
 
-
-                if (!config.has(tabId)) {
-                    config.set(tabId, { active: false, main: false });
-                }
 
                 switch (action) {
-                    case _actions.ACTIONS.CHANGE_ACTIVE:
-                        config.set(tabId, _extends({}, config.get(tabId), { active: value }));
+                    case _actions.ACTIONS.CHANGE_STATUS:
+                        var theIndex = tabIds.indexOf(tabId);
+
+                        while (active && tabIds.length > 2) {
+                            tabIds.splice(0, 1); //确保最多只会保留2个tab
+                        }
+
+                        if (active && theIndex < 0) {
+                            tabIds.push(tabId);
+                        } else if (!active && theIndex >= 0) {
+                            tabIds.splice(theIndex, 1);
+                        }
+
                         break;
-                    case _actions.ACTIONS.CHANGE_AS_MAIN_WINDOW:
-                        config.set(tabId, _extends({}, config.get(tabId), { main: value }));
+                    case _actions.ACTIONS.START_SYNC:
+                        break;
+                    case _actions.ACTIONS.END_SYNC:
                         break;
                     default:
                         break;
                 }
 
-                console.log('after update.');
-                console.log(config);
+                console.log(tabIds);
             });
             break;
 

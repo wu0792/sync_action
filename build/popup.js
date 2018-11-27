@@ -95,8 +95,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var ACTIONS = {
-    CHANGE_ACTIVE: 'CHANGE_ACTIVE',
-    CHANGE_AS_MAIN_WINDOW: 'CHANGE_AS_MAIN_WINDOW'
+    CHANGE_STATUS: 'CHANGE_STATUS',
+    START_SYNC: 'START_SYNC',
+    END_SYNC: 'END_SYNC'
 };
 
 exports.ACTIONS = ACTIONS;
@@ -267,20 +268,9 @@ var Popup = function Popup() {
       active = _useState2[0],
       setActive = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      asMainWindow = _useState4[0],
-      setAsMainWindow = _useState4[1];
-
   (0, _react.useEffect)(function () {
-    sendMessage({ action: _actions.ACTIONS.CHANGE_ACTIVE, value: active });
-    !active && asMainWindow && setAsMainWindow(false);
-  }, [active]);
-
-  (0, _react.useEffect)(function () {
-    sendMessage({ action: _actions.ACTIONS.CHANGE_AS_MAIN_WINDOW, value: asMainWindow });
-    asMainWindow && !active && setActive(true);
-  }, [asMainWindow]);
+    return sendMessage({ action: _actions.ACTIONS.CHANGE_STATUS, active: active });
+  });
 
   return _react2.default.createElement(
     _react2.default.Fragment,
@@ -293,29 +283,23 @@ var Popup = function Popup() {
         { htmlFor: 'active' },
         '\u662F\u5426\u6FC0\u6D3B\uFF1A'
       ),
-      _react2.default.createElement(
-        'label',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', name: 'active', id: 'active', checked: active, onChange: function onChange(_) {
-            return setActive(!active);
-          } })
-      )
+      _react2.default.createElement('input', { type: 'checkbox', id: 'active', name: 'active', checked: active, onChange: function onChange(ev) {
+          return setActive(ev.target.checked);
+        } })
     ),
     _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'label',
-        { htmlFor: 'isMainWindow' },
-        '\u662F\u5426\u4E3B\u7A97\u53E3\uFF1A'
-      ),
-      _react2.default.createElement(
-        'label',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', name: 'isMainWindow', id: 'isMainWindow', checked: asMainWindow, onChange: function onChange(_) {
-            return setAsMainWindow(!asMainWindow);
-          } })
-      )
+      'button',
+      { id: 'btnStart', onClick: function onClick() {
+          return sendMessage({ action: _actions.ACTIONS.START_SYNC });
+        } },
+      '\u5F00\u59CB'
+    ),
+    _react2.default.createElement(
+      'button',
+      { id: 'btnEnd', onClick: function onClick() {
+          return sendMessage({ action: _actions.ACTIONS.END_SYNC });
+        } },
+      '\u7ED3\u675F'
     )
   );
 };

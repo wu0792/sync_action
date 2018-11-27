@@ -13,33 +13,18 @@ function sendMessage(data) {
 
 const Popup = () => {
   let [active, setActive] = useState(false)
-  let [asMainWindow, setAsMainWindow] = useState(false)
 
-  useEffect(() => {
-    sendMessage({ action: ACTIONS.CHANGE_ACTIVE, value: active })
-    !active && asMainWindow && setAsMainWindow(false)
-  }, [active])
-
-  useEffect(() => {
-    sendMessage({ action: ACTIONS.CHANGE_AS_MAIN_WINDOW, value: asMainWindow })
-    asMainWindow && !active && setActive(true)
-  }, [asMainWindow])
+  useEffect(() => sendMessage({ action: ACTIONS.CHANGE_STATUS, active }))
 
   return (
     <React.Fragment>
       <div>
-        <label htmlFor="active">是否激活：</label>
-        <label>
-          <input type="checkbox" name="active" id="active" checked={active} onChange={_ => setActive(!active)} />
-        </label>
+        <label htmlFor='active'>是否激活：</label>
+        <input type='checkbox' id='active' name='active' checked={active} onChange={ev => setActive(ev.target.checked)} />
       </div>
 
-      <div>
-        <label htmlFor="isMainWindow">是否主窗口：</label>
-        <label>
-          <input type="checkbox" name="isMainWindow" id="isMainWindow" checked={asMainWindow} onChange={_ => setAsMainWindow(!asMainWindow)} />
-        </label>
-      </div>
+      <button id='btnStart' onClick={() => sendMessage({ action: ACTIONS.START_SYNC })}>开始</button>
+      <button id='btnEnd' onClick={() => sendMessage({ action: ACTIONS.END_SYNC })}>结束</button>
     </React.Fragment>
   )
 }

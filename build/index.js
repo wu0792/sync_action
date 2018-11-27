@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -95,8 +95,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var ACTIONS = {
-    CHANGE_ACTIVE: 'CHANGE_ACTIVE',
-    CHANGE_AS_MAIN_WINDOW: 'CHANGE_AS_MAIN_WINDOW'
+    CHANGE_STATUS: 'CHANGE_STATUS',
+    START_SYNC: 'START_SYNC',
+    END_SYNC: 'END_SYNC'
 };
 
 exports.ACTIONS = ACTIONS;
@@ -267,20 +268,9 @@ var Popup = function Popup() {
       active = _useState2[0],
       setActive = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      asMainWindow = _useState4[0],
-      setAsMainWindow = _useState4[1];
-
   (0, _react.useEffect)(function () {
-    sendMessage({ action: _actions.ACTIONS.CHANGE_ACTIVE, value: active });
-    !active && asMainWindow && setAsMainWindow(false);
-  }, [active]);
-
-  (0, _react.useEffect)(function () {
-    sendMessage({ action: _actions.ACTIONS.CHANGE_AS_MAIN_WINDOW, value: asMainWindow });
-    asMainWindow && !active && setActive(true);
-  }, [asMainWindow]);
+    return sendMessage({ action: _actions.ACTIONS.CHANGE_STATUS, active: active });
+  });
 
   return _react2.default.createElement(
     _react2.default.Fragment,
@@ -293,29 +283,23 @@ var Popup = function Popup() {
         { htmlFor: 'active' },
         '\u662F\u5426\u6FC0\u6D3B\uFF1A'
       ),
-      _react2.default.createElement(
-        'label',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', name: 'active', id: 'active', checked: active, onChange: function onChange(_) {
-            return setActive(!active);
-          } })
-      )
+      _react2.default.createElement('input', { type: 'checkbox', id: 'active', name: 'active', checked: active, onChange: function onChange(ev) {
+          return setActive(ev.target.checked);
+        } })
     ),
     _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'label',
-        { htmlFor: 'isMainWindow' },
-        '\u662F\u5426\u4E3B\u7A97\u53E3\uFF1A'
-      ),
-      _react2.default.createElement(
-        'label',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', name: 'isMainWindow', id: 'isMainWindow', checked: asMainWindow, onChange: function onChange(_) {
-            return setAsMainWindow(!asMainWindow);
-          } })
-      )
+      'button',
+      { id: 'btnStart', onClick: function onClick() {
+          return sendMessage({ action: _actions.ACTIONS.START_SYNC });
+        } },
+      '\u5F00\u59CB'
+    ),
+    _react2.default.createElement(
+      'button',
+      { id: 'btnEnd', onClick: function onClick() {
+          return sendMessage({ action: _actions.ACTIONS.END_SYNC });
+        } },
+      '\u7ED3\u675F'
     )
   );
 };
@@ -357,7 +341,8 @@ X.useMutationEffect=function(a,b){return W().useMutationEffect(a,b)};X.useReduce
 /***/ }),
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -367,7 +352,7 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -378,7 +363,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_popup.Popup, null), document.getElementById('root'));
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -407,12 +392,12 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(10);
+  module.exports = __webpack_require__(11);
 } else {}
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -428,7 +413,7 @@ if (true) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(2),n=__webpack_require__(3),ba=__webpack_require__(11);function ca(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(2),n=__webpack_require__(3),ba=__webpack_require__(12);function ca(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function u(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ca(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:u("227");function da(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}
 var ea=!1,fa=null,ha=!1,ia=null,ja={onError:function(a){ea=!0;fa=a}};function ka(a,b,c,d,e,f,g,h,k){ea=!1;fa=null;da.apply(ja,arguments)}function la(a,b,c,d,e,f,g,h,k){ka.apply(this,arguments);if(ea){if(ea){var l=fa;ea=!1;fa=null}else u("198"),l=void 0;ha||(ha=!0,ia=l)}}var ma=null,na={};
 function oa(){if(ma)for(var a in na){var b=na[a],c=ma.indexOf(a);-1<c?void 0:u("96",a);if(!qa[c]){b.extractEvents?void 0:u("97",a);qa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;ra.hasOwnProperty(h)?u("99",h):void 0;ra[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&sa(k[e],g,h);e=!0}else f.registrationName?(sa(f.registrationName,g,h),e=!0):e=!1;e?void 0:u("98",d,a)}}}}
@@ -678,19 +663,19 @@ var Fi={default:Ci},Gi=Fi&&Ci||Fi;module.exports=Gi.default||Gi;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(12);
+  module.exports = __webpack_require__(13);
 } else {}
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
